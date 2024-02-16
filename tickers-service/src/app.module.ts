@@ -6,7 +6,11 @@ import { TickersModule } from './tickers/tickers.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [ConfigModule.forRoot(), ScheduleModule.forRoot(), TickersModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
+    TickersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
