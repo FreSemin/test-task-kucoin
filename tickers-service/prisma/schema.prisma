@@ -7,8 +7,8 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model Ticker {
-  id               Int             @id @default(autoincrement())
+model Tickers {
+  id               Int              @id @default(autoincrement())
   symbol           String
   symbolName       String
   buy              Float
@@ -28,12 +28,12 @@ model Ticker {
   takerCoefficient Float
   makerCoefficient Float
   updatedTime      Int
-  TickerHistory    TickerHistory[]
+  TickerHistory    TickersHistory[]
 }
 
-model TickerHistory {
-  id               Int    @id @default(autoincrement())
-  ticker           Ticker @relation(fields: [tickerId], references: [id])
+model TickersHistory {
+  id               Int     @id @default(autoincrement())
+  ticker           Tickers @relation(fields: [tickerId], references: [id])
   symbol           String
   symbolName       String
   buy              Float
