@@ -1,6 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { CronJob } from 'cron';
+import {
+  DEFAULT_CRON_SYNC_TICKERS_NAME,
+  DEFAULT_CRON_SYNC_TICKERS_TIME,
+} from 'src/constants';
 
 @Injectable()
 export class TickersService {
@@ -8,15 +13,29 @@ export class TickersService {
 
   private tickersCron: CronJob;
 
-  constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
+  private syncCronJobName: string = '';
+  private syncCronJobTime: string = '';
+
+  constructor(
+    private readonly schedulerRegistry: SchedulerRegistry,
+    private readonly configService: ConfigService,
+  ) {
+    this.syncCronJobName =
+      this.configService.get<string>('CRON_SYNC_TICKERS_NAME') ??
+      DEFAULT_CRON_SYNC_TICKERS_NAME;
+
+    this.syncCronJobTime =
+      this.configService.get<string>('CRON_SYNC_TICKERS_TIME') ??
+      DEFAULT_CRON_SYNC_TICKERS_TIME;
+  }
 
   private initCron(): void {
     this.schedulerRegistry.addCronJob(
-      'sync_tickers',
-      new CronJob('*/5 * * * * *', this.syncTickers.bind(this)),
+      this.syncCronJobName,
+      new CronJob(this.syncCronJobTime, this.syncTickers.bind(this)),
     );
 
-    this.tickersCron = this.schedulerRegistry.getCronJob('sync_tickers');
+    this.tickersCron = this.schedulerRegistry.getCronJob(this.syncCronJobName);
   }
 
   private syncTickers(): void {
