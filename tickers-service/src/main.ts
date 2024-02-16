@@ -6,5 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
 
   const tickersService: TickersService = app.get(TickersService);
+
+  tickersService.startSyncTickersCron();
 }
 bootstrap();
