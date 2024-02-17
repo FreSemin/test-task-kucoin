@@ -5,7 +5,7 @@ export type TickerFieldsType = string | number;
 // Hint:
 // FieldsType should be 'string' when get data from api
 // FieldsType should be 'number' when work with data
-export type Ticker<FieldsType extends TickerFieldsType> = {
+export type TickerData<FieldsType extends TickerFieldsType> = {
   symbol: string;
   symbolName: string;
   buy: FieldsType;
@@ -26,8 +26,8 @@ export type Ticker<FieldsType extends TickerFieldsType> = {
   makerCoefficient: FieldsType;
 };
 
-export type TickerForConvertFields<T extends TickerFieldsType> = Omit<
-  Ticker<T>,
+export type TickerDataForConvertFields<T extends TickerFieldsType> = Omit<
+  TickerData<T>,
   'symbol' | 'symbolName'
 >;
 
@@ -35,5 +35,5 @@ export type AllTickersResponse = ApiResponse<AllTickers<string>>;
 
 export type AllTickers<T extends TickerFieldsType> = {
   time: T;
-  ticker: Ticker<T>[];
+  ticker: TickerData<T>[];
 };

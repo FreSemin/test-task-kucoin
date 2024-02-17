@@ -10,7 +10,8 @@ import {
   AllTickers,
   AllTickersResponse,
   Ticker,
-  TickerForConvertFields,
+  TickerData,
+  TickerDataForConvertFields,
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
 
@@ -54,13 +55,13 @@ export class TickersService {
     const allTickersResponse: AllTickersResponse = await apiResponse.json();
 
     if (allTickersResponse.data) {
-      const convertedTickers: Ticker<number>[] =
-        allTickersResponse.data.ticker.map((ticker): Ticker<number> => {
+      const convertedTickers: TickerData<number>[] =
+        allTickersResponse.data.ticker.map((ticker): TickerData<number> => {
           const { symbol, symbolName, ...fieldsToNumber } = ticker;
           return {
             symbol,
             symbolName,
-            ...convertFieldsToNumber<TickerForConvertFields<number>>(
+            ...convertFieldsToNumber<TickerDataForConvertFields<number>>(
               fieldsToNumber,
             ),
           };
