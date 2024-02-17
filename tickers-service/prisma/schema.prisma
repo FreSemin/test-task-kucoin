@@ -27,7 +27,7 @@ model Tickers {
   makerFeeRate     Float
   takerCoefficient Float
   makerCoefficient Float
-  updatedTime      Int
+  updatedTime      BigInt           @db.BigInt
   TickerHistory    TickersHistory[]
 }
 
@@ -52,6 +52,6 @@ model TickersHistory {
   makerFeeRate     Float
   takerCoefficient Float
   makerCoefficient Float
-  updatedTime      Int
+  updatedTime      BigInt  @db.BigInt
   tickerId         Int
 }
