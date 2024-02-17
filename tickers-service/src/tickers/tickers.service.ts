@@ -14,6 +14,7 @@ import {
   TickerDataForConvertFields,
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
+import { PrismaTickersService } from '../modules/prisma/prisma-tickers.service';
 
 @Injectable()
 export class TickersService {
@@ -27,6 +28,7 @@ export class TickersService {
   constructor(
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly configService: ConfigService,
+    private readonly prismaTickersService: PrismaTickersService,
   ) {
     this.syncCronJobName =
       this.configService.get<string>('CRON_SYNC_TICKERS_NAME') ??
@@ -77,6 +79,39 @@ export class TickersService {
     }
   }
 
+  private async updateTickers(
+    tickersData: AllTickers<number>,
+  ): Promise<Ticker[]> {
+    return await Promise.allSettled([
+      ...tickersData.ticker.map((ticker) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            resolve(
+              await this.prismaTickersService.upsetTicker(
+                ticker,
+                tickersData.time,
+              ),
+            );
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }),
+    ])
+      .then((updatedTickers: Array<PromiseSettledResult<Ticker>>) => {
+        return updatedTickers
+          .filter((ticker: PromiseSettledResult<Ticker>) => {
+            // TODO: add status to constants
+            return ticker.status === 'fulfilled';
+          })
+          .map((ticker: PromiseFulfilledResult<Ticker>) => ticker.value);
+      })
+      .catch((error) => {
+        // TODO: create custom error
+        throw error;
+      });
+  }
+
   private async syncTickers(): Promise<void> {
     try {
       this.logger.log(
@@ -84,6 +119,11 @@ export class TickersService {
       );
 
       const allTickers: AllTickers<number> = await this.getAllTickers();
+
+      const updatedTickers: Ticker[] = await this.updateTickers(allTickers);
+
+      this.logger.log(allTickers.ticker.length);
+      this.logger.log(updatedTickers.length);
 
       this.logger.log(
         `Cron Job: ${this.syncCronJobName} finished: ${Date.now()}`,
