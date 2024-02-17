@@ -7,10 +7,18 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+model Symbol {
+  id             Int             @id @default(autoincrement())
+  symbol         String          @unique
+  symbolName     String
+  ticker         Tickers?
+  TickersHistory TickersHistory?
+}
+
 model Tickers {
   id               Int              @id @default(autoincrement())
-  symbol           String           @unique
-  symbolName       String
+  symbol           Symbol           @relation(fields: [symbolId], references: [id])
+  symbolId         Int              @unique
   buy              Float
   sell             Float
   bestBidSize      Float
@@ -34,8 +42,8 @@ model Tickers {
 model TickersHistory {
   id               Int     @id @default(autoincrement())
   ticker           Tickers @relation(fields: [tickerId], references: [id])
-  symbol           String
-  symbolName       String
+  symbol           Symbol  @relation(fields: [symbolId], references: [id])
+  symbolId         Int     @unique
   buy              Float
   sell             Float
   bestBidSize      Float
