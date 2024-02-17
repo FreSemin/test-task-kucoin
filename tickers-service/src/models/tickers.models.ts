@@ -2,6 +2,11 @@ import { ApiResponse } from '.';
 
 export type TickerFieldsType = string | number;
 
+export type Ticker = TickerData<number> & {
+  id: number;
+  updatedTime: bigint;
+};
+
 // Hint:
 // FieldsType should be 'string' when get data from api
 // FieldsType should be 'number' when work with data
