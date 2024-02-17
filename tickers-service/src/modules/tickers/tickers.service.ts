@@ -14,7 +14,7 @@ import {
   TickerDataForConvertFields,
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
-import { PrismaTickersService } from '../modules/prisma/prisma-tickers.service';
+import { PrismaTickersService } from '../prisma/prisma-tickers.service';
 
 @Injectable()
 export class TickersService {
