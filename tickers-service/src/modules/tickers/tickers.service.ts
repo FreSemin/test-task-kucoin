@@ -140,13 +140,13 @@ export class TickersService {
           'Number of created histories is not equal to updated tickers',
         );
       }
-
-      this.logger.log(
-        `Cron Job: ${this.syncCronJobName} finished: ${new Date().toUTCString()}`,
-      );
     } catch (error) {
       // TODO: improve error handling
       this.logger.error(error.message);
+    } finally {
+      this.logger.log(
+        `Cron Job: ${this.syncCronJobName} finished: ${new Date().toUTCString()}`,
+      );
     }
   }
 
