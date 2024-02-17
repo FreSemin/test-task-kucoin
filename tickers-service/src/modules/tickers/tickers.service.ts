@@ -15,6 +15,8 @@ import {
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
 import { PrismaTickersService } from '../prisma/prisma-tickers.service';
+import { PrismaTickersHistoryService } from '../prisma/prisma-tickers-history.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TickersService {
@@ -29,6 +31,7 @@ export class TickersService {
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly configService: ConfigService,
     private readonly prismaTickersService: PrismaTickersService,
+    private readonly prismaTickersHistoryService: PrismaTickersHistoryService,
   ) {
     this.syncCronJobName =
       this.configService.get<string>('CRON_SYNC_TICKERS_NAME') ??
@@ -112,6 +115,12 @@ export class TickersService {
       });
   }
 
+  private async createTickersHistory(
+    tickers: Ticker[],
+  ): Promise<Prisma.BatchPayload> {
+    return await this.prismaTickersHistoryService.createTickersHistory(tickers);
+  }
+
   private async syncTickers(): Promise<void> {
     try {
       this.logger.log(
@@ -122,8 +131,15 @@ export class TickersService {
 
       const updatedTickers: Ticker[] = await this.updateTickers(allTickers);
 
-      this.logger.log(allTickers.ticker.length);
-      this.logger.log(updatedTickers.length);
+      const createdTickersHistory: Prisma.BatchPayload =
+        await this.createTickersHistory(updatedTickers);
+
+      if (createdTickersHistory.count !== updatedTickers.length) {
+        // TODO: create custom error
+        throw new Error(
+          'Number of created histories is not equal to updated tickers',
+        );
+      }
 
       this.logger.log(
         `Cron Job: ${this.syncCronJobName} finished: ${new Date().toUTCString()}`,
