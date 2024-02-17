@@ -7,6 +7,16 @@ export type Ticker = TickerData<number> & {
   updatedTime: bigint;
 };
 
+export type TickerHistory = Ticker & {
+  id: number;
+  tickerId: number;
+};
+
+export type TickerHistoryData = TickerData<number> & {
+  tickerId: number;
+  updatedTime: bigint;
+};
+
 // Hint:
 // FieldsType should be 'string' when get data from api
 // FieldsType should be 'number' when work with data
