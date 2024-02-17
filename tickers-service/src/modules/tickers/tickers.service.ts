@@ -115,7 +115,7 @@ export class TickersService {
   private async syncTickers(): Promise<void> {
     try {
       this.logger.log(
-        `Cron Job: ${this.syncCronJobName} started: ${Date.now()}`,
+        `Cron Job: ${this.syncCronJobName} started: ${new Date().toUTCString()}`,
       );
 
       const allTickers: AllTickers<number> = await this.getAllTickers();
@@ -126,7 +126,7 @@ export class TickersService {
       this.logger.log(updatedTickers.length);
 
       this.logger.log(
-        `Cron Job: ${this.syncCronJobName} finished: ${Date.now()}`,
+        `Cron Job: ${this.syncCronJobName} finished: ${new Date().toUTCString()}`,
       );
     } catch (error) {
       // TODO: improve error handling
