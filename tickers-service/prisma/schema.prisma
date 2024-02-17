@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Symbol {
-  id             Int             @id @default(autoincrement())
-  symbol         String          @unique
+  id             Int              @id @default(autoincrement())
+  symbol         String           @unique
   symbolName     String
   ticker         Tickers?
-  TickersHistory TickersHistory?
+  TickersHistory TickersHistory[]
 }
 
 model Tickers {
@@ -43,7 +43,7 @@ model TickersHistory {
   id               Int     @id @default(autoincrement())
   ticker           Tickers @relation(fields: [tickerId], references: [id])
   symbol           Symbol  @relation(fields: [symbolId], references: [id])
-  symbolId         Int     @unique
+  symbolId         Int
   buy              Float
   sell             Float
   bestBidSize      Float
