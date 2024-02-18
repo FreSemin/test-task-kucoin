@@ -44,7 +44,7 @@ export class PrismaSymbolService extends PrismaClient {
         });
       }),
     ])
-      .then((symbols: Array<PromiseSettledResult<TickerSymbol>>) => {
+      .then((symbols: PromiseSettledResult<TickerSymbol>[]) => {
         return symbols
           .filter((symbol: PromiseSettledResult<TickerSymbol>) => {
             return symbol.status === PROMISE_STATUS_FULFILLED;
