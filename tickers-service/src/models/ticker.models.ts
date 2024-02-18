@@ -2,7 +2,7 @@ import { ApiResponse, TickerSymbolData } from '.';
 
 export type TickerFieldsType = string | number;
 
-export type Ticker = TickerData<number> & {
+export type Ticker = TickerDataFields<number> & {
   id: number;
   symbolId: number;
   updatedTime: bigint;
