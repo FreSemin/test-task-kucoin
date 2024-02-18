@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { TickersModule } from './modules/tickers/tickers.module';
+import { TickerModule } from './modules/tickers/ticker.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
-    TickersModule,
+    TickerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { TickersService } from './modules/tickers/tickers.service';
+import { TickerService } from './modules/tickers/ticker.service';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
 
-  const tickersService: TickersService = app.get(TickersService);
+  const tickerService: TickerService = app.get(TickerService);
 
-  tickersService.startSyncTickersCron();
+  tickerService.startSyncTickersCron();
 }
 bootstrap();

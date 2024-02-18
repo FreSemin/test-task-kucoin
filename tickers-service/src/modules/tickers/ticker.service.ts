@@ -24,8 +24,8 @@ import { SymbolService } from './symbol.service';
 import { GetAllTickersError, SyncTickersError } from 'src/utils/errors.util';
 
 @Injectable()
-export class TickersService {
-  private readonly logger = new Logger(TickersService.name);
+export class TickerService {
+  private readonly logger = new Logger(TickerService.name);
 
   private tickersCron: CronJob;
 

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TickersService } from './tickers.service';
+import { TickerService } from './ticker.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { SymbolService } from './symbol.service';
 
 @Module({
   imports: [PrismaModule],
-  providers: [TickersService, SymbolService],
+  providers: [TickerService, SymbolService],
 })
-export class TickersModule {}
+export class TickerModule {}
