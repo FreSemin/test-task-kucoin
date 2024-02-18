@@ -17,6 +17,7 @@ import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
 import { PrismaTickersService } from '../prisma/prisma-tickers.service';
 import { PrismaTickersHistoryService } from '../prisma/prisma-tickers-history.service';
 import { Prisma } from '@prisma/client';
+import { SymbolService } from './symbol.service';
 
 @Injectable()
 export class TickersService {
@@ -30,6 +31,7 @@ export class TickersService {
   constructor(
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly configService: ConfigService,
+    private readonly symbolService: SymbolService,
     private readonly prismaTickersService: PrismaTickersService,
     private readonly prismaTickersHistoryService: PrismaTickersHistoryService,
   ) {
@@ -150,7 +152,10 @@ export class TickersService {
     }
   }
 
-  startSyncTickersCron(): void {
+  async startSyncTickersCron(): Promise<void> {
+    // TODO: add try catch
+    await this.symbolService.syncSymbols();
+
     this.initCron();
 
     this.tickersCron.start();
