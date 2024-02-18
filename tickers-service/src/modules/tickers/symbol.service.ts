@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AllTickersResponse, TickerSymbolData } from 'src/models';
 import { PrismaSymbolService } from '../prisma/prisma-symbol.service';
+import { COIN_API_ALLTICKERS, COIN_API_URL } from 'src/constants';
 
 @Injectable()
 export class SymbolService {
@@ -8,9 +9,8 @@ export class SymbolService {
 
   async syncSymbols(): Promise<void> {
     // TODO: add try catch
-    // TODO: add api to constants and env
     const apiResponse: Response = await fetch(
-      'https://api.kucoin.com/api/v1/market/allTickers',
+      COIN_API_URL + COIN_API_ALLTICKERS,
     );
 
     const allTickersResponse: AllTickersResponse = await apiResponse.json();

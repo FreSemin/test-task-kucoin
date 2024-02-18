@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { CronJob } from 'cron';
 import {
+  COIN_API_ALLTICKERS,
+  COIN_API_URL,
   DEFAULT_CRON_SYNC_TICKERS_NAME,
   DEFAULT_CRON_SYNC_TICKERS_TIME,
 } from 'src/constants';
@@ -54,9 +56,8 @@ export class TickersService {
   }
 
   private async getAllTickers(): Promise<AllTickers<number>> {
-    // TODO: add api to constants and env
     const apiResponse: Response = await fetch(
-      'https://api.kucoin.com/api/v1/market/allTickers',
+      COIN_API_URL + COIN_API_ALLTICKERS,
     );
 
     const allTickersResponse: AllTickersResponse = await apiResponse.json();
