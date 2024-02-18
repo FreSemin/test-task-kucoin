@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { PrismaTickersService } from './prisma-tickers.service';
-import { PrismaTickersHistoryService } from './prisma-tickers-history.service';
+import { PrismaTickerHistoryService } from './prisma-ticker-history.service';
 import { PrismaSymbolService } from './prisma-symbol.service';
 
 @Module({
   providers: [
     PrismaTickersService,
-    PrismaTickersHistoryService,
+    PrismaTickerHistoryService,
     PrismaSymbolService,
   ],
   exports: [
     PrismaTickersService,
-    PrismaTickersHistoryService,
+    PrismaTickerHistoryService,
     PrismaSymbolService,
   ],
 })

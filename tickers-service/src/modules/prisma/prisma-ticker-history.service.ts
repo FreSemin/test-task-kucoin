@@ -3,9 +3,9 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { Ticker, TickerHistoryData } from 'src/models';
 
 @Injectable()
-export class PrismaTickersHistoryService extends PrismaClient {
+export class PrismaTickerHistoryService extends PrismaClient {
   async createTickersHistory(tickers: Ticker[]): Promise<Prisma.BatchPayload> {
-    const tickersHistoryInputs: TickerHistoryData[] = tickers.map((ticker) => {
+    const tickersHistoryData: TickerHistoryData[] = tickers.map((ticker) => {
       const { id, ...tickerData } = ticker;
 
       return {
@@ -14,8 +14,8 @@ export class PrismaTickersHistoryService extends PrismaClient {
       };
     });
 
-    return this.tickersHistory.createMany({
-      data: tickersHistoryInputs,
+    return this.tickerHistory.createMany({
+      data: tickersHistoryData,
     });
   }
 }

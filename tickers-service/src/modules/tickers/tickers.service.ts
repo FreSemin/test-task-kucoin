@@ -18,7 +18,7 @@ import {
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
 import { PrismaTickersService } from '../prisma/prisma-tickers.service';
-import { PrismaTickersHistoryService } from '../prisma/prisma-tickers-history.service';
+import { PrismaTickerHistoryService } from '../prisma/prisma-ticker-history.service';
 import { Prisma } from '@prisma/client';
 import { SymbolService } from './symbol.service';
 import { GetAllTickersError, SyncTickersError } from 'src/utils/errors.util';
@@ -37,7 +37,7 @@ export class TickersService {
     private readonly configService: ConfigService,
     private readonly symbolService: SymbolService,
     private readonly prismaTickersService: PrismaTickersService,
-    private readonly prismaTickersHistoryService: PrismaTickersHistoryService,
+    private readonly prismaTickersHistoryService: PrismaTickerHistoryService,
   ) {
     this.syncCronJobName =
       this.configService.get<string>('CRON_SYNC_TICKERS_NAME') ??
