@@ -6,7 +6,9 @@ import { PROMISE_STATUS_FULFILLED } from 'src/constants';
 
 @Injectable()
 export class PrismaTickersService extends PrismaClient {
-  constructor(private readonly prismaSymbolService: PrismaSymbolService) {}
+  constructor(private readonly prismaSymbolService: PrismaSymbolService) {
+    super();
+  }
 
   async syncTickers(
     tickersData: TickerData<number>[],
