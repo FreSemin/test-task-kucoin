@@ -127,11 +127,17 @@ export class TickersService {
   }
 
   async startSyncTickersCron(): Promise<void> {
-    // TODO: add try catch
-    await this.symbolService.syncSymbols();
+    try {
+      await this.symbolService.syncSymbols();
 
-    this.initCron();
+      this.initCron();
 
-    this.tickersCron.start();
+      this.tickersCron.start();
+    } catch (error) {
+      this.logger.error(
+        `Cron Job: ${this.syncCronJobName} initialization Error: `,
+        error.message,
+      );
+    }
   }
 }
