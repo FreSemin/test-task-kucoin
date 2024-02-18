@@ -36,8 +36,8 @@ export class TickerService {
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly configService: ConfigService,
     private readonly symbolService: SymbolService,
-    private readonly prismaTickersService: PrismaTickerService,
-    private readonly prismaTickersHistoryService: PrismaTickerHistoryService,
+    private readonly prismaTickerService: PrismaTickerService,
+    private readonly prismaTickerHistoryService: PrismaTickerHistoryService,
   ) {
     this.syncCronJobName =
       this.configService.get<string>('CRON_SYNC_TICKERS_NAME') ??
@@ -65,9 +65,9 @@ export class TickerService {
     const allTickersResponse: AllTickersResponse = await apiResponse.json();
 
     if (allTickersResponse.data) {
-      const convertedTickers: TickerData<number>[] =
-        allTickersResponse.data.ticker.map((ticker): TickerData<number> => {
-          const { symbol, symbolName, ...fieldsToNumber } = ticker;
+      const convertedTickersData: TickerData<number>[] =
+        allTickersResponse.data.ticker.map((tickerData): TickerData<number> => {
+          const { symbol, symbolName, ...fieldsToNumber } = tickerData;
           return {
             symbol,
             symbolName,
@@ -77,7 +77,7 @@ export class TickerService {
 
       return {
         time: convertToFloatNumber(allTickersResponse.data.time),
-        ticker: convertedTickers,
+        ticker: convertedTickersData,
       };
     } else {
       throw new GetAllTickersError();
@@ -85,18 +85,18 @@ export class TickerService {
   }
 
   private async updateTickers(
-    tickersData: AllTickers<number>,
+    allTickers: AllTickers<number>,
   ): Promise<Ticker[]> {
-    return await this.prismaTickersService.syncTickers(
-      tickersData.ticker,
-      tickersData.time,
+    return await this.prismaTickerService.syncTickers(
+      allTickers.ticker,
+      allTickers.time,
     );
   }
 
   private async createTickersHistory(
     tickers: Ticker[],
   ): Promise<Prisma.BatchPayload> {
-    return await this.prismaTickersHistoryService.createTickersHistory(tickers);
+    return await this.prismaTickerHistoryService.createTickersHistory(tickers);
   }
 
   private async syncTickers(): Promise<void> {
