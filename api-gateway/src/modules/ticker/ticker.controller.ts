@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { TickerService } from './ticker.service';
 import { Ticker } from '@prisma/client';
 
@@ -9,5 +9,12 @@ export class TickerController {
   @Get('all')
   async findAll(): Promise<Ticker[]> {
     return await this.tickerService.findAll();
+  }
+
+  @Get(':symbolId')
+  async findOneBySymbolId(
+    @Param('symbolId', ParseIntPipe) symbolId: number,
+  ): Promise<Ticker> {
+    return await this.tickerService.findOneBySymbolId(symbolId);
   }
 }
