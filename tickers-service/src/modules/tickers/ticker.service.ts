@@ -5,7 +5,6 @@ import { CronJob } from 'cron';
 import {
   COIN_API_ALLTICKERS,
   COIN_API_URL,
-  CREATED_TICKERS_HISTORIES_COUNT_ERROR,
   DEFAULT_CRON_SYNC_TICKERS_NAME,
   DEFAULT_CRON_SYNC_TICKERS_TIME,
 } from 'src/constants';
@@ -21,7 +20,7 @@ import { PrismaTickerService } from '../prisma/prisma-ticker.service';
 import { PrismaTickerHistoryService } from '../prisma/prisma-ticker-history.service';
 import { Prisma } from '@prisma/client';
 import { SymbolService } from './symbol.service';
-import { GetAllTickersError, SyncTickersError } from 'src/utils/errors.util';
+import { GetAllTickersError } from 'src/utils/errors.util';
 
 @Injectable()
 export class TickerService {
@@ -109,12 +108,7 @@ export class TickerService {
 
       const updatedTickers: Ticker[] = await this.updateTickers(allTickers);
 
-      const createdTickersHistory: Prisma.BatchPayload =
-        await this.createTickersHistory(updatedTickers);
-
-      if (createdTickersHistory.count !== updatedTickers.length) {
-        throw new SyncTickersError(CREATED_TICKERS_HISTORIES_COUNT_ERROR);
-      }
+      await this.createTickersHistory(updatedTickers);
     } catch (error) {
       this.logger.error(error.message);
     } finally {

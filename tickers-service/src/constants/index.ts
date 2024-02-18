@@ -6,8 +6,6 @@ export const PROMISE_STATUS_FULFILLED = 'fulfilled';
 export const COIN_API_URL = 'https://api.kucoin.com/api/v1';
 export const COIN_API_ALLTICKERS = '/market/allTickers';
 
-export const CREATED_TICKERS_HISTORIES_COUNT_ERROR =
-  "Number of created tickers histories isn't equal to updated tickers";
 export const SYNC_TICKERS_ERROR = 'Error while syncing tickers';
 export const SYNC_SYMBOLS_ERROR = 'Error while syncing tickers symbols';
 export const GET_ALL_TICKERS_ERROR = 'Get All Tickers Error';
