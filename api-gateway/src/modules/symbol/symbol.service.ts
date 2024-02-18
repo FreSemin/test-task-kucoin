@@ -26,4 +26,16 @@ export class SymbolService extends PrismaClient {
 
     return symbol;
   }
+
+  async findOneBySymbol(symbol: string): Promise<TickerSymbol> {
+    const tickerSymbol: TickerSymbol | null = await this.symbol.findUnique({
+      where: { symbol },
+    });
+
+    if (!tickerSymbol) {
+      throw new NotFoundException(SYMBOL_NOT_FOUND_EXCEPTION(symbol));
+    }
+
+    return tickerSymbol;
+  }
 }
