@@ -9,17 +9,17 @@ datasource db {
 }
 
 model Symbol {
-  id             Int              @id @default(autoincrement())
-  symbol         String           @unique
-  symbolName     String
-  ticker         Tickers?
-  TickersHistory TickersHistory[]
+  id            Int             @id @default(autoincrement())
+  symbol        String          @unique
+  symbolName    String
+  ticker        Ticker?
+  TickerHistory TickerHistory[]
 }
 
-model Tickers {
-  id               Int              @id @default(autoincrement())
-  symbol           Symbol           @relation(fields: [symbolId], references: [id])
-  symbolId         Int              @unique
+model Ticker {
+  id               Int             @id @default(autoincrement())
+  symbol           Symbol          @relation(fields: [symbolId], references: [id])
+  symbolId         Int             @unique
   buy              Float
   sell             Float
   bestBidSize      Float
@@ -36,14 +36,14 @@ model Tickers {
   makerFeeRate     Float
   takerCoefficient Float
   makerCoefficient Float
-  updatedTime      BigInt           @db.BigInt
-  TickerHistory    TickersHistory[]
+  updatedTime      BigInt          @db.BigInt
+  TickerHistory    TickerHistory[]
 }
 
-model TickersHistory {
-  id               Int     @id @default(autoincrement())
-  ticker           Tickers @relation(fields: [tickerId], references: [id])
-  symbol           Symbol  @relation(fields: [symbolId], references: [id])
+model TickerHistory {
+  id               Int    @id @default(autoincrement())
+  ticker           Ticker @relation(fields: [tickerId], references: [id])
+  symbol           Symbol @relation(fields: [symbolId], references: [id])
   symbolId         Int
   buy              Float
   sell             Float
@@ -61,6 +61,6 @@ model TickersHistory {
   makerFeeRate     Float
   takerCoefficient Float
   makerCoefficient Float
-  updatedTime      BigInt  @db.BigInt
+  updatedTime      BigInt @db.BigInt
   tickerId         Int
 }
