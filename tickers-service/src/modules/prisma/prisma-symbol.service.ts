@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { PROMISE_STATUS_FULFILLED } from 'src/constants';
 import { TickerSymbol, TickerSymbolData } from 'src/models';
 
 @Injectable()
@@ -45,8 +46,7 @@ export class PrismaSymbolService extends PrismaClient {
       .then((symbols: Array<PromiseSettledResult<TickerSymbol>>) => {
         return symbols
           .filter((symbol: PromiseSettledResult<TickerSymbol>) => {
-            // TODO: add status to constants
-            return symbol.status === 'fulfilled';
+            return symbol.status === PROMISE_STATUS_FULFILLED;
           })
           .map((symbol: PromiseFulfilledResult<TickerSymbol>) => symbol.value);
       })
