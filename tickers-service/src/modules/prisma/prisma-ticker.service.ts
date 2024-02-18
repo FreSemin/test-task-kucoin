@@ -6,7 +6,7 @@ import { PROMISE_STATUS_FULFILLED } from 'src/constants';
 import { SyncTickersError } from 'src/utils/errors.util';
 
 @Injectable()
-export class PrismaTickersService extends PrismaClient {
+export class PrismaTickerService extends PrismaClient {
   constructor(private readonly prismaSymbolService: PrismaSymbolService) {
     super();
   }
@@ -28,7 +28,7 @@ export class PrismaTickersService extends PrismaClient {
               });
 
             resolve(
-              await this.tickers.upsert({
+              await this.ticker.upsert({
                 where: {
                   symbolId: tickerSymbol.id,
                 },
@@ -49,7 +49,7 @@ export class PrismaTickersService extends PrismaClient {
         });
       }),
     ])
-      .then((updatedTickers: Array<PromiseSettledResult<Ticker>>) => {
+      .then((updatedTickers: PromiseSettledResult<Ticker>[]) => {
         return updatedTickers
           .filter((ticker: PromiseSettledResult<Ticker>) => {
             return ticker.status === PROMISE_STATUS_FULFILLED;

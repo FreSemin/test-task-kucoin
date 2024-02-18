@@ -17,7 +17,7 @@ import {
   TickerDataFields,
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
-import { PrismaTickersService } from '../prisma/prisma-tickers.service';
+import { PrismaTickerService } from '../prisma/prisma-ticker.service';
 import { PrismaTickerHistoryService } from '../prisma/prisma-ticker-history.service';
 import { Prisma } from '@prisma/client';
 import { SymbolService } from './symbol.service';
@@ -36,7 +36,7 @@ export class TickersService {
     private readonly schedulerRegistry: SchedulerRegistry,
     private readonly configService: ConfigService,
     private readonly symbolService: SymbolService,
-    private readonly prismaTickersService: PrismaTickersService,
+    private readonly prismaTickersService: PrismaTickerService,
     private readonly prismaTickersHistoryService: PrismaTickerHistoryService,
   ) {
     this.syncCronJobName =
