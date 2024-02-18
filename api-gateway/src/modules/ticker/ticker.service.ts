@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_SORT_ASC, TICKER_NOT_FOUND_EXCEPTION } from 'src/constants';
-import { Ticker } from 'src/models';
+import { ParsedPeriod, Period, Ticker, TickerHistory } from 'src/models';
+import { getParsedPeriod } from 'src/utils';
 
 @Injectable()
 export class TickerService extends PrismaClient {
@@ -50,5 +51,21 @@ export class TickerService extends PrismaClient {
     }
 
     return ticker;
+  }
+
+  async findHistoryBySymbolId(
+    symbolId: number,
+    period: Period,
+  ): Promise<TickerHistory[]> {
+    const parsedPeriod: ParsedPeriod = getParsedPeriod(period);
+    return await this.tickerHistory.findMany({
+      where: {
+        symbolId,
+        updatedTime: {
+          gte: parsedPeriod.from,
+          lte: parsedPeriod.to,
+        },
+      },
+    });
   }
 }
