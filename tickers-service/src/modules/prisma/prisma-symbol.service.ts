@@ -18,7 +18,6 @@ export class PrismaSymbolService extends PrismaClient {
     });
   }
 
-  // TODO: add return type
   async syncSymbols(symbolsData: TickerSymbolData[]): Promise<TickerSymbol[]> {
     return await Promise.allSettled([
       ...symbolsData.map((symbolData) => {
