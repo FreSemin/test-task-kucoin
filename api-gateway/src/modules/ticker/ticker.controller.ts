@@ -23,11 +23,11 @@ export class TickerController {
     return await this.tickerService.findOneBySymbol(symbol);
   }
 
-  @Get('/history/:symbolId')
-  async findHistoryBySymbolId(
-    @Param('symbolId', ParseIntPipe) symbolId: number,
+  @Get('/history/:symbol')
+  async findHistoryBySymbol(
+    @Param('symbol') symbol: string,
     @Query() period: Period,
   ): Promise<TickerHistory[]> {
-    return this.tickerService.findHistoryBySymbolId(symbolId, period);
+    return this.tickerService.findHistoryBySymbol(symbol, period);
   }
 }
