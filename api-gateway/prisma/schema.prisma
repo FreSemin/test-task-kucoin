@@ -1,0 +1,66 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model Symbol {
+  id            Int             @id @default(autoincrement())
+  symbol        String          @unique
+  symbolName    String
+  ticker        Ticker?
+  TickerHistory TickerHistory[]
+}
+
+model Ticker {
+  id               Int             @id @default(autoincrement())
+  symbol           Symbol          @relation(fields: [symbolId], references: [id])
+  symbolId         Int             @unique
+  buy              Float
+  sell             Float
+  bestBidSize      Float
+  bestAskSize      Float
+  changeRate       Float
+  changePrice      Float
+  high             Float
+  low              Float
+  vol              Float
+  volValue         Float
+  last             Float
+  averagePrice     Float
+  takerFeeRate     Float
+  makerFeeRate     Float
+  takerCoefficient Float
+  makerCoefficient Float
+  updatedTime      BigInt          @db.BigInt
+  TickerHistory    TickerHistory[]
+}
+
+model TickerHistory {
+  id               Int    @id @default(autoincrement())
+  ticker           Ticker @relation(fields: [tickerId], references: [id])
+  symbol           Symbol @relation(fields: [symbolId], references: [id])
+  symbolId         Int
+  buy              Float
+  sell             Float
+  bestBidSize      Float
+  bestAskSize      Float
+  changeRate       Float
+  changePrice      Float
+  high             Float
+  low              Float
+  vol              Float
+  volValue         Float
+  last             Float
+  averagePrice     Float
+  takerFeeRate     Float
+  makerFeeRate     Float
+  takerCoefficient Float
+  makerCoefficient Float
+  updatedTime      BigInt @db.BigInt
+  tickerId         Int
+}
