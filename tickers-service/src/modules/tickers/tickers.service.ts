@@ -11,7 +11,7 @@ import {
   AllTickersResponse,
   Ticker,
   TickerData,
-  TickerDataForConvertFields,
+  TickerDataFields,
 } from 'src/models';
 import { convertFieldsToNumber, convertToFloatNumber } from 'src/utils';
 import { PrismaTickersService } from '../prisma/prisma-tickers.service';
@@ -68,9 +68,7 @@ export class TickersService {
           return {
             symbol,
             symbolName,
-            ...convertFieldsToNumber<TickerDataForConvertFields<number>>(
-              fieldsToNumber,
-            ),
+            ...convertFieldsToNumber<TickerDataFields<number>>(fieldsToNumber),
           };
         });
 
@@ -87,34 +85,10 @@ export class TickersService {
   private async updateTickers(
     tickersData: AllTickers<number>,
   ): Promise<Ticker[]> {
-    return await Promise.allSettled([
-      ...tickersData.ticker.map((ticker) => {
-        return new Promise(async (resolve, reject) => {
-          try {
-            resolve(
-              await this.prismaTickersService.upsetTicker(
-                ticker,
-                tickersData.time,
-              ),
-            );
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }),
-    ])
-      .then((updatedTickers: Array<PromiseSettledResult<Ticker>>) => {
-        return updatedTickers
-          .filter((ticker: PromiseSettledResult<Ticker>) => {
-            // TODO: add status to constants
-            return ticker.status === 'fulfilled';
-          })
-          .map((ticker: PromiseFulfilledResult<Ticker>) => ticker.value);
-      })
-      .catch((error) => {
-        // TODO: create custom error
-        throw error;
-      });
+    return await this.prismaTickersService.syncTickers(
+      tickersData.ticker,
+      tickersData.time,
+    );
   }
 
   private async createTickersHistory(
