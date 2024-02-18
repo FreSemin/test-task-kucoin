@@ -4,6 +4,20 @@ import { TickerSymbol, TickerSymbolData } from 'src/models';
 
 @Injectable()
 export class PrismaSymbolService extends PrismaClient {
+  async findOrCreate(
+    tickerSymbolData: TickerSymbolData,
+  ): Promise<TickerSymbol> {
+    return this.symbol.upsert({
+      where: {
+        symbol: tickerSymbolData.symbol,
+      },
+      update: {},
+      create: {
+        ...tickerSymbolData,
+      },
+    });
+  }
+
   // TODO: add return type
   async syncSymbols(symbolsData: TickerSymbolData[]): Promise<TickerSymbol[]> {
     return await Promise.allSettled([
