@@ -1,3 +1,3 @@
-export * from './tickers.models';
+export * from './ticker.models';
 export * from './api.models';
 export * from './symbol.models';
