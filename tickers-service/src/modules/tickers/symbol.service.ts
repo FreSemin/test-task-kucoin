@@ -8,7 +8,6 @@ export class SymbolService {
   constructor(private readonly prismaSymbolService: PrismaSymbolService) {}
 
   async syncSymbols(): Promise<void> {
-    // TODO: add try catch
     const apiResponse: Response = await fetch(
       COIN_API_URL + COIN_API_ALLTICKERS,
     );
