@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PROMISE_STATUS_FULFILLED } from 'src/constants';
 import { TickerSymbol, TickerSymbolData } from 'src/models';
+import { SyncSymbolsError } from 'src/utils/errors.util';
 
 @Injectable()
 export class PrismaSymbolService extends PrismaClient {
@@ -50,9 +51,8 @@ export class PrismaSymbolService extends PrismaClient {
           })
           .map((symbol: PromiseFulfilledResult<TickerSymbol>) => symbol.value);
       })
-      .catch((error) => {
-        // TODO: create custom error
-        throw error;
+      .catch(() => {
+        throw new SyncSymbolsError();
       });
   }
 }

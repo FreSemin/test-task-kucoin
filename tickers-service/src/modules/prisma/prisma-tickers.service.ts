@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { Ticker, TickerData, TickerSymbol } from 'src/models';
 import { PrismaSymbolService } from './prisma-symbol.service';
 import { PROMISE_STATUS_FULFILLED } from 'src/constants';
+import { SyncTickersError } from 'src/utils/errors.util';
 
 @Injectable()
 export class PrismaTickersService extends PrismaClient {
@@ -55,9 +56,8 @@ export class PrismaTickersService extends PrismaClient {
           })
           .map((ticker: PromiseFulfilledResult<Ticker>) => ticker.value);
       })
-      .catch((error) => {
-        // TODO: create custom error
-        throw error;
+      .catch(() => {
+        throw new SyncTickersError();
       });
   }
 }

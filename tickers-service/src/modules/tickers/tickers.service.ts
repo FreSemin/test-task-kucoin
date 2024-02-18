@@ -5,6 +5,7 @@ import { CronJob } from 'cron';
 import {
   COIN_API_ALLTICKERS,
   COIN_API_URL,
+  CREATED_TICKERS_HISTORIES_COUNT_ERROR,
   DEFAULT_CRON_SYNC_TICKERS_NAME,
   DEFAULT_CRON_SYNC_TICKERS_TIME,
 } from 'src/constants';
@@ -20,6 +21,7 @@ import { PrismaTickersService } from '../prisma/prisma-tickers.service';
 import { PrismaTickersHistoryService } from '../prisma/prisma-tickers-history.service';
 import { Prisma } from '@prisma/client';
 import { SymbolService } from './symbol.service';
+import { GetAllTickersError, SyncTickersError } from 'src/utils/errors.util';
 
 @Injectable()
 export class TickersService {
@@ -78,8 +80,7 @@ export class TickersService {
         ticker: convertedTickers,
       };
     } else {
-      // TODO: throw custom error
-      throw new Error('Get All Tickers Error');
+      throw new GetAllTickersError();
     }
   }
 
@@ -112,13 +113,9 @@ export class TickersService {
         await this.createTickersHistory(updatedTickers);
 
       if (createdTickersHistory.count !== updatedTickers.length) {
-        // TODO: create custom error
-        throw new Error(
-          'Number of created histories is not equal to updated tickers',
-        );
+        throw new SyncTickersError(CREATED_TICKERS_HISTORIES_COUNT_ERROR);
       }
     } catch (error) {
-      // TODO: improve error handling
       this.logger.error(error.message);
     } finally {
       this.logger.log(

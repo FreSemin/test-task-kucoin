@@ -1,3 +1,6 @@
+import { CONVERT_FIELDS_TO_NUMBER_ERROR } from 'src/constants';
+import { UtilsError } from './errors.util';
+
 export function convertFieldsToNumber<T>(obj: Record<string, string>): T {
   const result: Partial<T> = {};
 
@@ -15,8 +18,6 @@ export function convertToFloatNumber(value: string): number {
   if (!isNaN(parsedNumber)) {
     return parsedNumber;
   } else {
-    // TODO: add more details for message
-    // TODO: create custom error
-    throw new Error(`Convert Fields to number Error!`);
+    throw new UtilsError(CONVERT_FIELDS_TO_NUMBER_ERROR);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AllTickersResponse, TickerSymbolData } from 'src/models';
 import { PrismaSymbolService } from '../prisma/prisma-symbol.service';
 import { COIN_API_ALLTICKERS, COIN_API_URL } from 'src/constants';
+import { GetAllTickersError } from 'src/utils/errors.util';
 
 @Injectable()
 export class SymbolService {
@@ -25,8 +26,7 @@ export class SymbolService {
 
       await this.prismaSymbolService.syncSymbols(symbolsData);
     } else {
-      // TODO: throw custom error
-      throw new Error('Get All Tickers Error');
+      throw new GetAllTickersError();
     }
   }
 }
