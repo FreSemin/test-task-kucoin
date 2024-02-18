@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { Ticker, TickerData, TickerSymbol } from 'src/models';
+import { PrismaSymbolService } from './prisma-symbol.service';
 
 @Injectable()
 export class PrismaTickersService extends PrismaClient {
+  constructor(private readonly prismaSymbolService: PrismaSymbolService) {}
+
   async syncTickers(
     tickersData: TickerData<number>[],
     updatedTime: number,
@@ -14,15 +17,11 @@ export class PrismaTickersService extends PrismaClient {
           try {
             const { symbol, symbolName, ...tickerData } = ticker;
 
-            // TODO: add or create from service
-            // TODO: upsert maybe
             const tickerSymbol: TickerSymbol =
-              (await this.symbol.findUnique({
-                where: {
-                  symbol,
-                },
-              })) ||
-              (await this.symbol.create({ data: { symbol, symbolName } }));
+              await this.prismaSymbolService.findOrCreate({
+                symbol,
+                symbolName,
+              });
 
             resolve(
               await this.tickers.upsert({
