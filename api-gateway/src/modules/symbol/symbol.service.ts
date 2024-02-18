@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_SORT_ASC, SYMBOL_NOT_FOUND_EXCEPTION } from 'src/constants';
 import { TickerSymbol } from 'src/models';
@@ -13,5 +13,17 @@ export class SymbolService extends PrismaClient {
         },
       ],
     });
+  }
+
+  async findOneById(id: number): Promise<TickerSymbol> {
+    const symbol: TickerSymbol | null = await this.symbol.findUnique({
+      where: { id },
+    });
+
+    if (!symbol) {
+      throw new NotFoundException(SYMBOL_NOT_FOUND_EXCEPTION(id));
+    }
+
+    return symbol;
   }
 }

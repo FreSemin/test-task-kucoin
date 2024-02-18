@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { SymbolService } from './symbol.service';
 import { TickerSymbol } from 'src/models';
 
@@ -9,5 +9,12 @@ export class SymbolController {
   @Get('all')
   async findAll(): Promise<TickerSymbol[]> {
     return await this.symbolService.findAll();
+  }
+
+  @Get(':id')
+  async findOneById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<TickerSymbol> {
+    return await this.symbolService.findOneById(id);
   }
 }
