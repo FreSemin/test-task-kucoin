@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { SORT_ASC } from 'src/constants';
+import { PRISMA_SORT_ASC, SYMBOL_NOT_FOUND_EXCEPTION } from 'src/constants';
 import { TickerSymbol } from 'src/models';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class SymbolService extends PrismaClient {
     return await this.symbol.findMany({
       orderBy: [
         {
-          id: SORT_ASC,
+          id: PRISMA_SORT_ASC,
         },
       ],
     });
