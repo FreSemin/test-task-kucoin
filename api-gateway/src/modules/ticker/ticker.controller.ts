@@ -17,4 +17,9 @@ export class TickerController {
   ): Promise<Ticker> {
     return await this.tickerService.findOneBySymbolId(symbolId);
   }
+
+  @Get('info/:symbol')
+  async findOneBySymbol(@Param('symbol') symbol: string): Promise<Ticker> {
+    return await this.tickerService.findOneBySymbol(symbol);
+  }
 }

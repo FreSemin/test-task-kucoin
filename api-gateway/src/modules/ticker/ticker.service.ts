@@ -31,4 +31,23 @@ export class TickerService extends PrismaClient {
 
     return ticker;
   }
+
+  async findOneBySymbol(symbol: string): Promise<Ticker> {
+    const ticker: Ticker | null = await this.ticker.findFirst({
+      where: {
+        symbol: {
+          symbol,
+        },
+      },
+      include: {
+        symbol: true,
+      },
+    });
+
+    if (!ticker) {
+      throw new NotFoundException(TICKER_NOT_FOUND_EXCEPTION(symbol));
+    }
+
+    return ticker;
+  }
 }
