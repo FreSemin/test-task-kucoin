@@ -11,15 +11,8 @@ export class SymbolController {
     return await this.symbolService.findAll();
   }
 
-  @Get(':id')
-  async findOneById(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<TickerSymbol> {
-    return await this.symbolService.findOneById(id);
-  }
-
-  @Get('info/:symbol')
-  async findOneByName(@Param('symbol') symbol: string): Promise<TickerSymbol> {
+  @Get(':symbol')
+  async findOneById(@Param('symbol') symbol: string): Promise<TickerSymbol> {
     return await this.symbolService.findOneBySymbol(symbol);
   }
 }
