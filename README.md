@@ -134,3 +134,7 @@ Available endpoints:
     - Example: `/ticker/history/SENSO-USDT?from=2024-02-19T06:13&to=2024-02-19T06:26`
     - Example: `/ticker/history/33?from=2024-02-19T06:13&to=2024-02-19T06:26`
     - `to=YYYY-MM-DDTHH:mm` is optional;
+
+### TICKERS-SERVICE
+
+Service creates 'cron job' which gets data from 'KUCOIN' api and store in to database by `CRON_SYNC_TICKERS_TIME` period.
