@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateUserDto, User } from 'src/models';
-// import { hashValue } from 'src/utils';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
