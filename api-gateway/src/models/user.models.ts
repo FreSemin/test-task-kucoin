@@ -32,3 +32,11 @@ export class CreateUserDto {
   @IsRepeated('password')
   retypedPassword: string;
 }
+
+export class UserAuth {
+  @IsEmail()
+  email: string;
+
+  @Length(8)
+  password: string;
+}
