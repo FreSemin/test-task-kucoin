@@ -1,1 +1,1 @@
-export * from './isValidPeriod.constraint';
+export * from './is-valid-period.constraint';
