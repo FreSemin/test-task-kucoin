@@ -40,3 +40,7 @@ export class UserSignInDto {
   @Length(8)
   password: string;
 }
+
+export type AuthToken = {
+  access_token: string;
+};
