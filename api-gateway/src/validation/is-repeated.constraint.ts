@@ -3,6 +3,7 @@ import {
   ValidationOptions,
   ValidationArguments,
 } from 'class-validator';
+import { PROPERTY_IDENTICAL_TO_EXCEPTION } from 'src/constants';
 
 export function IsRepeated(
   property: string,
@@ -25,8 +26,7 @@ export function IsRepeated(
           return value === obj[property];
         },
         defaultMessage(): string {
-          // TODO: add msg to constants
-          return `${propertyName} needs to be identical to ${property}`;
+          return PROPERTY_IDENTICAL_TO_EXCEPTION(propertyName, property);
         },
       },
     });

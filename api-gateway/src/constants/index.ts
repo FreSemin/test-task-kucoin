@@ -9,6 +9,10 @@ export const USER_NOT_FOUND_EXCEPTION = (value: string | number) =>
   `User: ${value} was not found!`;
 export const PROPERTY_TAKEN_EXCEPTION = (property: string | number) =>
   `${property} already taken!`;
+export const PROPERTY_IDENTICAL_TO_EXCEPTION = (
+  property: string,
+  propertyIdenticalTo: string,
+) => `${property} needs to be identical to ${propertyIdenticalTo}!`;
 
 export const PERIOD_NOT_VALID_FORMAT = (propertyName: string) =>
   `${propertyName} should be in format: YYYY-MM-DDTHH:mm`;
