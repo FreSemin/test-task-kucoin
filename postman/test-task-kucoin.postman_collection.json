@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "b79c0836-119d-40dd-a9ee-883bd2f96532",
+		"name": "test-task-kucoin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31667936"
+	},
+	"item": [
+		{
+			"name": "Symbol GET All",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/symbol/all",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"symbol",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Symbol GET One By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/symbol/15",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"symbol",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticker GET All",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/ticker/all",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"ticker",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticker Get One By Symbol",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/ticker/MPLX-USDT",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"ticker",
+						"MPLX-USDT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticker History Get One By Symbol",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/ticker/history/SENSO-USDT?from=2024-02-19T06:13&to=2024-02-19T06:26",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"ticker",
+						"history",
+						"SENSO-USDT"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2024-02-19T06:13"
+						},
+						{
+							"key": "to",
+							"value": "2024-02-19T06:26"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"name1\",\r\n    \"email\": \"name9@email.com\",\r\n    \"password\": \"87654321\",\r\n    \"retypedPassword\": \"87654321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth SignIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"name8@email.com\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/auth/signin",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
