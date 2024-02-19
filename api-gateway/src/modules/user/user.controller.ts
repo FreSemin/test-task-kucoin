@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './input/create-user.dto';
 import { User } from 'src/models';
@@ -7,8 +13,8 @@ import { User } from 'src/models';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // TODO: hide password from response
   // TODO: Send created token
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.create(createUserDto);

@@ -10,11 +10,13 @@ export class UserService extends PrismaClient {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { retypedPassword, password, ...userData } = createUserDto;
 
-    return await this.user.create({
+    const user = await this.user.create({
       data: {
         ...userData,
         password: hashValue(password),
       },
     });
+
+    return new User(user);
   }
 }
