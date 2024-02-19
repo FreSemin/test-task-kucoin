@@ -6,5 +6,6 @@ import { UserDoesNotExistConstraint } from './validation/user-does-not-exist.con
 @Module({
   providers: [UserService, UserDoesNotExistConstraint],
   controllers: [UserController],
+  exports: [UserService],
 })
 export class UserModule {}

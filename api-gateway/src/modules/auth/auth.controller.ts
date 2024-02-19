@@ -9,6 +9,6 @@ export class AuthController {
   // TODO: add return type
   @Post('signin')
   async signIn(@Body() userAuth: UserAuth) {
-    return this.authService.signin(userAuth);
+    return this.authService.signIn(userAuth);
   }
 }
