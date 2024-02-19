@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { PROPERTY_TAKEN_EXCEPTION } from 'src/constants';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
@@ -33,9 +34,7 @@ export class UserDoesNotExistConstraint
   }
 
   defaultMessage?(validationArguments: ValidationArguments): string {
-    // TODO: add msg to constants
-
-    return `${validationArguments.property} already taken`;
+    return PROPERTY_TAKEN_EXCEPTION(validationArguments.property);
   }
 }
 
