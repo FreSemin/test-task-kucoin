@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { UserAuth } from 'src/models';
+import { UserSignInDto } from 'src/models';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 
@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(private readonly userService: UserService) {}
 
-  async signIn(userAuth: UserAuth) {
+  async signIn(userAuth: UserSignInDto) {
     // TODO: generate token
     const user: User = await this.userService.findOneByEmail(userAuth.email);
 

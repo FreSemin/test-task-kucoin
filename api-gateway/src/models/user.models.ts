@@ -33,7 +33,7 @@ export class CreateUserDto {
   retypedPassword: string;
 }
 
-export class UserAuth {
+export class UserSignInDto {
   @IsEmail()
   email: string;
 
