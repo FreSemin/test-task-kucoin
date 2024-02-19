@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateUserDto, User } from 'src/models';
 import * as bcrypt from 'bcrypt';
+import { USER_NOT_FOUND_EXCEPTION } from 'src/constants';
 
 @Injectable()
 export class UserService extends PrismaClient {
@@ -11,8 +12,7 @@ export class UserService extends PrismaClient {
     });
 
     if (!user) {
-      // TODO: add more detailed text
-      throw new NotFoundException();
+      throw new NotFoundException(USER_NOT_FOUND_EXCEPTION(email));
     }
 
     return user;
