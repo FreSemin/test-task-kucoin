@@ -12,7 +12,6 @@ import { CreateUserDto, User } from 'src/models';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // TODO: Send created token
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {

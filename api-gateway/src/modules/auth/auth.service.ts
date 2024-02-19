@@ -13,7 +13,6 @@ export class AuthService {
   ) {}
 
   async signIn(userAuth: UserSignInDto): Promise<AuthToken> {
-    // TODO: generate token
     const user: User = await this.userService.findOneByEmail(userAuth.email);
 
     if (!(await bcrypt.compare(userAuth.password, user.password))) {

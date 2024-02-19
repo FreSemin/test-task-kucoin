@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // TODO: add return type
   @Post('signin')
   async signIn(@Body() userAuth: UserSignInDto): Promise<AuthToken> {
     return this.authService.signIn(userAuth);
