@@ -1,14 +1,18 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { UserSignInDto } from 'src/models';
+import { AuthToken, UserSignInDto } from 'src/models';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async signIn(userAuth: UserSignInDto) {
+  async signIn(userAuth: UserSignInDto): Promise<AuthToken> {
     // TODO: generate token
     const user: User = await this.userService.findOneByEmail(userAuth.email);
 
@@ -16,6 +20,9 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    return userAuth;
+    const payload = { sub: user.id };
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }
