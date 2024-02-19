@@ -6,8 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './input/create-user.dto';
-import { User } from 'src/models';
+import { CreateUserDto, User } from 'src/models';
 
 @Controller('user')
 export class UserController {
