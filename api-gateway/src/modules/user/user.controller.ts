@@ -7,7 +7,6 @@ import { User } from 'src/models';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // TODO: hash password
   // TODO: hide password from response
   // TODO: Send created token
   @Post()
