@@ -57,7 +57,13 @@ Cron Job: sync_tickers finished: Mon, 19 Feb 2024 03:16:02 GMT
 npm install
 ```
 
-12. Run `api-gateway` in dev or production mode:
+12. In `api-gateway` folder run next command to generate Prisma client:
+
+```
+npx prisma generate
+```
+
+13. Run `api-gateway` in dev or production mode:
 
 ```
 npm run start:dev
@@ -68,7 +74,7 @@ npm run build
 npm run start:prod
 ```
 
-13. (Optional) Import collections and environment to your local PostMan from `postman` folder;
+14. (Optional) Import collections and environment to your local PostMan from `postman` folder;
 
 ### API-GATEWAY
 
@@ -96,6 +102,9 @@ Available endpoints:
         "email": "name1@email.com"
       }
       ```
+
+- Auth:
+
   - `POST` user sing in `/auth/signin`
     - Expected JSON body:
       ```
@@ -112,13 +121,13 @@ Available endpoints:
       ```
 
 - Symbol (token required):
-- **Warning!** `symbolOrSymbolId` can be `id` of the symbol in `symbol` table or symbol (example: `FLAME-USDT` or `13`)
+- **Warning!** `symbolOrSymbolId` can be `id` of the symbol in `symbol` database table or symbol (example: `FLAME-USDT` or `13`)
 
   - `GET` all symbols `/symbol/all`
   - `GET` one symbol `/symbol/:symbolOrSymbolId`
 
 - Ticker (token required):
-- **Warning!** `symbolOrSymbolId` can be `id` of the symbol in `symbol` table or symbol (example: `FLAME-USDT` or `13`)
+- **Warning!** `symbolOrSymbolId` can be `id` of the symbol in `symbol` database table or symbol (example: `FLAME-USDT` or `13`)
   - `GET` all Tickers current data `/ticker/all`
   - `GET` one Ticker current data `/ticker/:symbolOrSymbolId`
   - `GET` history of the Ticker for period `/ticker/history/:symbolOrSymbolId?from=YYYY-MM-DDTHH:mm&to=YYYY-MM-DDTHH:mm`
