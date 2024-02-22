@@ -1,7 +1,7 @@
 Dockerfile
 .dockerignore
-*/dist
-*/node_modules
+dist/
+node_modules/
 .git
-*.env
+.env
 npm-debug.log
