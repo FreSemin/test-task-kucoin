@@ -64,8 +64,6 @@ services:
 volumes:
   postgres:
     name: coin-db
-  tickers-service:
-    name: tickers-service
 
 networks:
   test-task-kucoin:
