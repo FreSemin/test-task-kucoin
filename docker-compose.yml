@@ -39,6 +39,28 @@ services:
     networks:
       - test-task-kucoin
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+      target: '${NODE_ENV}'
+    container_name: 'api-gateway_${NODE_ENV}'
+    entrypoint: ['npm', 'run', 'start:${NODE_ENV}-docker']
+    environment:
+      - NODE_ENV:${NODE_ENV}
+    env_file:
+      - ./api-gateway/.env
+    depends_on:
+      - coin-db
+    ports:
+      - '${APP_API_PORT:-3000}:3000'
+    volumes:
+      - ./api-gateway/:/usr/src/app/api-gateway
+      - /usr/src/app/api-gateway/node_modules
+    restart: unless-stopped
+    networks:
+      - test-task-kucoin
+
 volumes:
   postgres:
     name: coin-db
