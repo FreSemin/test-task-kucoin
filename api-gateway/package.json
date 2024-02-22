@@ -12,6 +12,9 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:dev-docker": "npm run prisma:migrate && npm run start:dev",
+    "start:prod-docker": "npm run prisma:migrate && npm run start:prod",
+    "prisma:migrate": "prisma migrate deploy",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
   },
   "dependencies": {
