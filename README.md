@@ -13,10 +13,23 @@ Project consists from two services:
 2. Copy content from `example.env` in newly created `.env` and replace all `<your_value>` with your values;
 3. Copy `.env` file to `api-gateway` and to `tickers-service` folders;
 4. On this stage your should have three `.env` files with your values;
+
+**For Production mode:**
+
 5. From the root of the project run command:
 
 ```
-   docker-compose up
+  docker compose up
+```
+
+Wait for containers build and start.
+
+**For local development:**
+
+5. From the root of the project run command:
+
+```
+   docker-compose up coin-db
 ```
 
 6. Check that database was initialized by connected to it using credentials from `.env`;
